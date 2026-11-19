@@ -17,7 +17,6 @@
         getData();
     });
 
-    // cegah XSS: ubah < > & menjadi teks biasa
     function esc(text) {
         return $('<div>').text(text == null ? '' : text).html();
     }

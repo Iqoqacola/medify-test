@@ -13,6 +13,6 @@ class MasterItem extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Kategori::class, 'kategori_item', 'master_item_id', 'category_id');
+        return $this->belongsToMany(Kategori::class, 'kategori_item', 'master_item_id', 'category_id')->withTimestamps();
     }
 }

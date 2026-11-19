@@ -23,6 +23,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/master-items', [App\Http\Controllers\MasterItemsController::class, 'index']);
+Route::get('/master-items/export-excel', [App\Http\Controllers\MasterItemsController::class, 'exportExcel']);
 Route::get('/master-items/search', [App\Http\Controllers\MasterItemsController::class, 'search']);
 Route::get('/master-items/form/{method}/{id?}', [App\Http\Controllers\MasterItemsController::class, 'formView']);
 Route::post('/master-items/form/{method}/{id?}', [App\Http\Controllers\MasterItemsController::class, 'formSubmit']);
@@ -34,4 +35,5 @@ Route::get('/master-items/delete/{id}', [App\Http\Controllers\MasterItemsControl
 Route::get('/master-items/update-random-data', [App\Http\Controllers\MasterItemsController::class, 'updateRandomData']);
 
 
-Route::resource('categories', KategoriController::class)->parameters(['categories' => 'kategori']);
+Route::get('categories/{category}/pdf', [KategoriController::class, 'pdf'])->name('categories.pdf');
+Route::resource('categories', KategoriController::class)->parameters(['categories' => 'category']);

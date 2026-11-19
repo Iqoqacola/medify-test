@@ -7,8 +7,18 @@
     </div>
     @endif
 
-    <div>
-        <label for="image">Image</label>
+    @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    <div class="form-group">
+        <label for="image">Foto</label>
 
         <div class="mb-2">
             <img id="preview"
@@ -45,7 +55,7 @@
             <option @if($selected=='Bukulapuk' ) selected @endif>Bukulapuk</option>
             <option @if($selected=='TokoBagas' ) selected @endif>TokoBagas</option>
             <option @if($selected=='E Commurz' ) selected @endif>E Commurz</option>
-            <optio @if($selected=='Blublu' ) selected @endif>Blublu</option>
+            <option @if($selected=='Blublu' ) selected @endif>Blublu</option>
         </select>
     </div>
 
@@ -57,9 +67,24 @@
             <option @if($selected=='Obat' ) selected @endif>Obat</option>
             <option @if($selected=='Alkes' ) selected @endif>Alkes</option>
             <option @if($selected=='Matkes' ) selected @endif>Matkes</option>
-            <optio @if($selected=='Umum' ) selected @endif>Umum</option>
-                <optio @if($selected=='ATK' ) selected @endif>ATK</option>
+            <option @if($selected=='Umum' ) selected @endif>Umum</option>
+            <option @if($selected=='ATK' ) selected @endif>ATK</option>
         </select>
+    </div>
+
+    @php $selected_categories = old('categories', !empty($item) ? $item->categories->pluck('id')->toArray() : []); @endphp
+    <div class="form-group">
+        <label>Kategori</label>
+        <div>
+            @forelse ($categories as $category)
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="categories[]" id="kategori-{{ $category->id }}" value="{{ $category->id }}" @if(in_array($category->id, $selected_categories)) checked @endif>
+                <label class="form-check-label" for="kategori-{{ $category->id }}">{{ $category->nama }}</label>
+            </div>
+            @empty
+            <small class="text-muted">Belum ada kategori, <a href="{{ route('categories.create') }}">tambah kategori</a></small>
+            @endforelse
+        </div>
     </div>
 
     <button class="btn btn-primary mt-3">Submit</button>

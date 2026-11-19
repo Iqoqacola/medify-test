@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MasterItemsExport;
 use App\Models\Kategori;
 use App\Models\MasterItem;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasterItemsController extends Controller
 {
@@ -58,7 +60,7 @@ class MasterItemsController extends Controller
 
     public function singleView($kode)
     {
-        $data['data'] = MasterItem::where('kode', $kode)->firstOrFail();
+        $data['data'] = MasterItem::with('categories')->where('kode', $kode)->firstOrFail();
         return view('master_items.single.index', $data);
     }
 
@@ -96,10 +98,14 @@ class MasterItemsController extends Controller
         $data_item->jenis = $request->jenis;
         $data_item->save();
 
-        // sync HARUS setelah save(), karena item baru baru punya id setelah disimpan
         $data_item->categories()->sync($request->input('categories', []));
 
         return redirect('master-items');
+    }
+
+    public function exportExcel()
+    {
+        return Excel::download(new MasterItemsExport, 'master-items.xlsx');
     }
 
     public function delete($id)

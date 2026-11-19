@@ -11,7 +11,17 @@
                 <div class="card-header">Master Item</div>
 
                 <div class="card-body">
+                    @if($data->img)
+                    <div class="mb-3">
+                        <img src="{{ asset('storage/' . $data->img) }}" alt="{{ $data->nama }}" class="img-thumbnail" style="max-width: 250px;">
+                    </div>
+                    @endif
                     <table>
+                        <tr>
+                            <th>Kode</th>
+                            <td>:</td>
+                            <td>{{$data->kode}}</td>
+                        </tr>
                         <tr>
                             <th>Nama</th>
                             <td>:</td>
@@ -41,6 +51,11 @@
                             <th>Jenis</th>
                             <td>:</td>
                             <td>{{$data->jenis}}</td>
+                        </tr>
+                        <tr>
+                            <th>Kategori</th>
+                            <td>:</td>
+                            <td>{{ $data->categories->pluck('nama')->implode(', ') ?: '-' }}</td>
                         </tr>
                     </table>
                     <a class="btn btn-info" href="{{url('master-items/form/edit')}}/{{$data->id}}">Edit</a>

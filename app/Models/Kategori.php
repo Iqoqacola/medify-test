@@ -11,6 +11,6 @@ class Kategori extends Model
 
     public function items()
     {
-        return $this->belongsToMany(MasterItem::class, 'kategori_item', 'category_id', 'master_item_id');
+        return $this->belongsToMany(MasterItem::class, 'kategori_item', 'category_id', 'master_item_id')->withTimestamps();
     }
 }

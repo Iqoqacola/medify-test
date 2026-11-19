@@ -24,4 +24,13 @@
 </div>
 @endsection
 @section('js')
+<script>
+    document.getElementById('image').addEventListener('change', function(e) {
+        var file = e.target.files[0];
+        var preview = document.getElementById('preview');
+        if (!file) return;
+        preview.src = URL.createObjectURL(file);
+        preview.classList.remove('d-none');
+    });
+</script>
 @endsection
